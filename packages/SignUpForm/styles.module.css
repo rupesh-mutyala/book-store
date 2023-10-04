@@ -1,0 +1,62 @@
+.form_group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin: 20px 0px;
+  }
+  
+  .label {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #4f4f4f;
+  }
+  
+  .input {
+    width: 94%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .submit_button {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .register_button {
+    text-decoration-line: underline;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .submit_button:hover {
+    background: #0056b3;
+  }
+
+  .form {
+    width: 100%;
+    margin: 16px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+
+  .button_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
