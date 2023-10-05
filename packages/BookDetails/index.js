@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import QuantityControls from '../../commons/QuantityControls';
 import Navbar from '../../commons/Navbar';
 import styles from './styles.module.css';
 import { addItem } from '../../store/reducers/cart';
+import toSnakeCase from '../../utils/toSnakeCase';
 
 function BookDetails({ data = {} }) {
+	const router = useRouter();
 	const dispatch = useDispatch();
 
 	const { cartItems = [] } = useSelector(({ cart }) => ({
@@ -24,6 +27,12 @@ function BookDetails({ data = {} }) {
 		dispatch(addItem({ ...data, quantity: 1 }));
 	};
 
+	const onClickAuthor = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+		router.push(`/authors/${toSnakeCase(author)}`);
+	};
+
 	const isBookedAddedToCart = cartItems.map((item) => item.ISBN).includes(ISBN);
 
 	const { quantity = 0 } = cartItems.find((item) => item.ISBN === ISBN) || {};
@@ -39,7 +48,13 @@ function BookDetails({ data = {} }) {
 
 				<div className={styles.book_details}>
 					<h2>{title}</h2>
-					<p className={styles.book_author}>by {author}</p>
+					<p
+						role="presentation"
+						className={styles.book_author}
+						onClick={onClickAuthor}
+					>
+						by {author}
+					</p>
 					<p className={styles.book_description}>{summary}</p>
 					<p className={styles.item_price}>Price: EUR {value}</p>
 
