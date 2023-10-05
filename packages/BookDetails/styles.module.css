@@ -1,25 +1,4 @@
-.container {
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
-  .header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .header p {
-    font-size: 1.25rem;
-  }
-  
-  .featured_book {
+.featured_book {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,7 +11,7 @@
   }
   
   .book_cover img {
-    max-width: 300px;
+    width: 400px;
     border: 1px solid #ccc;
     border-radius: 12px;
     height: auto;

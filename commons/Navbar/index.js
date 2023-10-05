@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styles from './styles.module.css'; // Import the CSS module styles
+import styles from './styles.module.css';
 import setCookie from '../../utils/setCookie';
 
 function Navbar() {
@@ -15,11 +15,17 @@ function Navbar() {
 
 	return (
 		<nav className={styles.navbar}>
-			<div className={styles.logo}>Book Store</div>
+			<div
+				role="presentation"
+				className={styles.logo}
+				onClick={() => router.push('/home')}
+			>
+				Book Store
+			</div>
 
 			<ul className={styles.nav_links}>
 				<li className={styles.nav_item}>
-					<Link href="/">Home</Link>
+					<Link href="/home">Home</Link>
 				</li>
 				<li className={styles.nav_item}>
 					<Link href="/books">Books</Link>

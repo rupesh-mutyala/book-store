@@ -1,11 +1,22 @@
-import data from '../../data';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import styles from './styles.module.css';
-import Navbar from '../Navbar';
+import Navbar from '../../commons/Navbar';
+import toSnakeCase from '../../utils/toSnakeCase';
 
 function Home() {
+	const router = useRouter();
+	const { data } = useSelector(({ books }) => ({
+		data: books || [],
+	}));
+
 	const featuredBook = data[0];
 
 	const { title = '', author = '', summary = '', image = '' } = featuredBook;
+
+	const onClickAuthor = () => {
+		router.push(`/authors/${toSnakeCase(author)}`);
+	};
 
 	return (
 		<>
@@ -17,17 +28,23 @@ function Home() {
 					<p>Your source for the best books!</p>
 				</div>
 
-				<section className={styles.featured_book}>
+				<div className={styles.featured_book}>
 					<div className={styles.book_cover}>
 						<img src={image} alt="Featured Book Cover" />
 					</div>
 
 					<div className={styles.book_details}>
 						<h2>{title}</h2>
-						<p className={styles.book_author}>{author}</p>
+						<p
+							className={styles.book_author}
+							role="presentation"
+							onClick={onClickAuthor}
+						>
+							by {author}
+						</p>
 						<p className={styles.book_description}>{summary}</p>
 					</div>
-				</section>
+				</div>
 			</div>
 		</>
 	);

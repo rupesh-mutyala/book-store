@@ -2,19 +2,26 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: space-between;
-    margin-top: 64px;
+    margin: 40px 20px 20px;
   }
   
+  .author {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px;
+  }
+
   .book {
     width: 20%;
     text-align: center;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
+    position: relative;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
 
     @media (max-width: 1200px) {
         width: 25%;
@@ -56,8 +63,42 @@
   .book_description {
     font-size: 0.875rem;
     color: #777;
+    margin-bottom: 48px;
   }
 
   .container {
     margin: 20px;
+  }
+
+  .book_price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007bff; 
+    display: flex;
+    align-items: center;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+    position: absolute;
+    bottom: 20px;
+    margin: auto;
+    width: calc(100% - 40px);
+  }
+
+  .add_to_cart_button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add_to_cart_button:hover {
+    background-color: #0056b3; 
   }
