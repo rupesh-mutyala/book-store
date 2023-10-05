@@ -1,0 +1,33 @@
+.filterContainer {
+   display: flex;
+   align-items: center;
+   justify-content: end;
+   margin: 24px 12px 8px;
+  }
+  
+  .filterInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-left: 12px;
+    width: 200px;
+  }
+  
+  .filterButton {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .filterButton:hover {
+    background-color: #ccc;
+  }
+  
+  .png {
+    margin-right: 4px;
+  }

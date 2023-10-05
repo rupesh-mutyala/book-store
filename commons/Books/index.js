@@ -1,6 +1,10 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Navbar from '../Navbar';
 import toStartCase from '../../utils/toStartCase';
+import toSnakeCase from '../../utils/toSnakeCase';
+import AuthorFilter from '../Filters';
 
 const truncateDescription = (text, maxWords) => {
 	const words = text.split(' ');
@@ -11,16 +15,41 @@ const truncateDescription = (text, maxWords) => {
 };
 
 function Books({ data = [], activeTab = '', author_id = '' }) {
+	const router = useRouter();
+
+	const [filteredData, setFilteredData] = useState(data);
+
+	const onClickOpenBook = (book_id) => {
+		router.push(`/books/${book_id}`);
+	};
+
+	const onClickAuthor = (e, author) => {
+		e.stopPropagation();
+		e.preventDefault();
+		router.push(`/authors/${author}`);
+	};
+
+	useEffect(() => {
+		setFilteredData(data);
+	}, [data]);
+
 	return (
 		<>
 			<Navbar />
+
+			<AuthorFilter
+				activeTab={activeTab}
+				data={data}
+				setFilteredData={setFilteredData}
+				filteredData={filteredData}
+			/>
 
 			{activeTab === 'author' ? (
 				<div className={styles.author}>Author: {toStartCase(author_id)}</div>
 			) : null}
 
 			<div className={styles.book_list}>
-				{data.map((book) => {
+				{filteredData.map((book) => {
 					const {
 						ISBN = '',
 						title = '',
@@ -30,7 +59,12 @@ function Books({ data = [], activeTab = '', author_id = '' }) {
 					} = book;
 
 					return (
-						<div key={ISBN} className={styles.book}>
+						<div
+							key={ISBN}
+							role="presentation"
+							onClick={() => onClickOpenBook(ISBN)}
+							className={styles.book}
+						>
 							<img
 								src={image}
 								alt={`${title} Cover`}
@@ -39,7 +73,13 @@ function Books({ data = [], activeTab = '', author_id = '' }) {
 
 							<div className={styles.book_details}>
 								<h3 className={styles.book_title}>{title}</h3>
-								<p className={styles.book_author}>{author}</p>
+								<p
+									role="presentation"
+									onClick={(e) => onClickAuthor(e, toSnakeCase(author))}
+									className={styles.book_author}
+								>
+									{author}
+								</p>
 								<p className={styles.book_description}>
 									{truncateDescription(summary, 10)}
 								</p>
