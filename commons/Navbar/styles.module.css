@@ -72,10 +72,45 @@
     }
   
     .nav_item {
-      margin-right: 0; /* Remove margin between list items */
+      margin-right: 0;
     }
   
     .logout_button {
-      margin-top: 1rem; /* Add some spacing below the links */
+      margin-top: 1rem;
     }
+  }
+
+  .cart_icon {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 20px;
+    padding: 6px;
+    cursor: pointer;
+  }
+
+  .cart_badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff5722;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 20px;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }

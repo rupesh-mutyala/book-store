@@ -7,7 +7,7 @@ function BookComponent() {
 		query: { book_id = '' },
 	} = useRouter();
 
-	const { data } = useSelector(({ books }) => ({
+	const { data = [] } = useSelector(({ books }) => ({
 		data: books || [],
 	}));
 

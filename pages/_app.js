@@ -31,8 +31,6 @@ function MyApp({ Component, pageProps }) {
 		const authorsDataObj = data.reduce((acc, cur) => {
 			const { author, title, ISBN = '' } = cur;
 
-			console.log('cur', cur);
-
 			const author_id = toSnakeCase(author);
 
 			if (Object.keys(acc).includes(author_id)) {

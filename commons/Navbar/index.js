@@ -1,9 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import styles from './styles.module.css';
 import setCookie from '../../utils/setCookie';
 
 function Navbar() {
+	const { cartItems } = useSelector(({ cart }) => ({
+		cartItems: cart,
+	}));
+
 	const router = useRouter();
 
 	const handleLogout = () => {
@@ -35,13 +41,25 @@ function Navbar() {
 				</li>
 			</ul>
 
-			<button
-				type="button"
-				className={styles.logout_button}
-				onClick={handleLogout}
-			>
-				Logout
-			</button>
+			<div className={styles.flex}>
+				<div
+					className={styles.cart_icon}
+					role="presentation"
+					onClick={() => router.push('/cart')}
+				>
+					<span className={styles.cart_badge}>{cartItems.length}</span>
+
+					<img src="/cart.svg" width={24} height={24} />
+				</div>
+
+				<button
+					type="button"
+					className={styles.logout_button}
+					onClick={handleLogout}
+				>
+					Logout
+				</button>
+			</div>
 		</nav>
 	);
 }

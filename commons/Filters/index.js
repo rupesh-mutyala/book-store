@@ -21,7 +21,7 @@ function AuthorFilter({
 		setFilteredData(filteredBooks);
 	};
 
-	const onlickSort = (type) => {
+	const onClickSort = (type) => {
 		const sorted = [...filteredData];
 
 		if (type === 'asc') {
@@ -47,10 +47,10 @@ function AuthorFilter({
 				onClick={() => {
 					if (sortBy === 'asc') {
 						setSortBy('desc');
-						onlickSort('desc');
+						onClickSort('desc');
 					} else {
 						setSortBy('asc');
-						onlickSort('asc');
+						onClickSort('asc');
 					}
 				}}
 			>

@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.css';
 import Navbar from '../Navbar';
 import toStartCase from '../../utils/toStartCase';
 import toSnakeCase from '../../utils/toSnakeCase';
 import AuthorFilter from '../Filters';
+import { addItem, removeItem } from '../../store/reducers/cart';
 
 const truncateDescription = (text, maxWords) => {
 	const words = text.split(' ');
@@ -15,6 +17,11 @@ const truncateDescription = (text, maxWords) => {
 };
 
 function Books({ data = [], activeTab = '', author_id = '' }) {
+	const { cartItems } = useSelector(({ cart }) => ({
+		cartItems: cart,
+	}));
+
+	const dispatch = useDispatch();
 	const router = useRouter();
 
 	const [filteredData, setFilteredData] = useState(data);
@@ -27,6 +34,15 @@ function Books({ data = [], activeTab = '', author_id = '' }) {
 		e.stopPropagation();
 		e.preventDefault();
 		router.push(`/authors/${author}`);
+	};
+
+	const onClickAddToCart = (bookDetails, isAddedToCart) => {
+		if (isAddedToCart) {
+			dispatch(removeItem(bookDetails.ISBN));
+			return;
+		}
+
+		dispatch(addItem({ ...bookDetails, quantity: 1 }));
 	};
 
 	useEffect(() => {
@@ -57,6 +73,10 @@ function Books({ data = [], activeTab = '', author_id = '' }) {
 						summary = '',
 						image = '',
 					} = book;
+
+					const isAddedToCart = cartItems
+						.map((item) => item.ISBN)
+						.includes(ISBN);
 
 					return (
 						<div
@@ -89,8 +109,18 @@ function Books({ data = [], activeTab = '', author_id = '' }) {
 										{book.price.currency} {book.price.value.toFixed(2)}
 									</div>
 
-									<button type="button" className={styles.add_to_cart_button}>
-										Add to Cart
+									<button
+										type="button"
+										className={`${styles.add_to_cart_button} ${
+											isAddedToCart && styles.added
+										}`}
+										onClick={(e) => {
+											e.stopPropagation();
+											e.preventDefault();
+											onClickAddToCart(book, isAddedToCart);
+										}}
+									>
+										{isAddedToCart ? 'Remove from cart' : 'Add to Cart'}
 									</button>
 								</div>
 							</div>

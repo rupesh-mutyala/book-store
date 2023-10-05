@@ -1,0 +1,45 @@
+.quantity_controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity_button {
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .quantity_button:hover {
+    background-color: #0056b3;
+  }
+  
+  .quantity {
+    font-size: 1rem;
+    margin: 0 10px;
+  }
+
+  .delete_button {
+    font-size: 1rem;
+    background-color: #ff6347; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 20px;
+  }
+  
+  .delete_button:hover {
+    background-color: #ff4136;
+  }

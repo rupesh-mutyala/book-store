@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
+import data from '../../data';
 import setCookie from '../../utils/setCookie';
+import { setBooks } from '../../store/reducers/books';
+import toSnakeCase from '../../utils/toSnakeCase';
+import { setAuthors } from '../../store/reducers/authors';
 
 const INPUT_MAPPING = [
 	{
@@ -20,6 +24,7 @@ const INPUT_MAPPING = [
 
 const useHandleLoginForm = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const [errors, setErrors] = useState({});
 	const [formData, setFormData] = useState({ username: '', password: '' });
@@ -66,6 +71,33 @@ const useHandleLoginForm = () => {
 
 		if (user) {
 			setCookie('loggedIn', true, 1);
+
+			dispatch(setBooks(data));
+
+			const authorsDataObj = data.reduce((acc, cur) => {
+				const { author, title, ISBN = '' } = cur;
+
+				const author_id = toSnakeCase(author);
+
+				if (Object.keys(acc).includes(author_id)) {
+					return {
+						...acc,
+						[author_id]: {
+							...acc[author_id],
+							books: [...acc[author_id].books, { title, id: ISBN }],
+						},
+					};
+				}
+
+				return {
+					...acc,
+					[author_id]: { author_id, author, books: [{ title, id: ISBN }] },
+				};
+			}, {});
+
+			const authors_list = Object.values(authorsDataObj);
+
+			dispatch(setAuthors(authors_list));
 
 			router.push('/home');
 		} else {

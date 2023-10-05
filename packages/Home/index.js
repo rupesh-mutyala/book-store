@@ -1,22 +1,44 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import styles from './styles.module.css';
 import Navbar from '../../commons/Navbar';
 import toSnakeCase from '../../utils/toSnakeCase';
+import QuantityControls from '../../commons/QuantityControls';
+import { addItem } from '../../store/reducers/cart';
 
 function Home() {
 	const router = useRouter();
-	const { data } = useSelector(({ books }) => ({
-		data: books || [],
-	}));
+	const dispatch = useDispatch();
 
-	const featuredBook = data[0];
+	const { data: bookData = [], cartItems = [] } = useSelector(
+		({ books, cart }) => ({
+			data: books || [],
+			cartItems: cart,
+		}),
+	);
 
-	const { title = '', author = '', summary = '', image = '' } = featuredBook;
+	const featuredBook = bookData[0];
+
+	const {
+		title = '',
+		author = '',
+		summary = '',
+		image = '',
+		price: { value = 0 } = {},
+		ISBN = '',
+	} = featuredBook || {};
 
 	const onClickAuthor = () => {
 		router.push(`/authors/${toSnakeCase(author)}`);
 	};
+
+	const onClickAddToCart = () => {
+		dispatch(addItem({ ...featuredBook, quantity: 1 }));
+	};
+
+	const isBookedAddedToCart = cartItems.map((item) => item.ISBN).includes(ISBN);
+
+	const { quantity = 0 } = cartItems.find((item) => item.ISBN === ISBN) || {};
 
 	return (
 		<>
@@ -43,6 +65,19 @@ function Home() {
 							by {author}
 						</p>
 						<p className={styles.book_description}>{summary}</p>
+						<p className={styles.item_price}>Price: EUR {value}</p>
+
+						{isBookedAddedToCart ? (
+							<QuantityControls item={featuredBook} quantity={quantity} />
+						) : (
+							<button
+								onClick={onClickAddToCart}
+								type="button"
+								className={styles.add_to_cart_button}
+							>
+								Add to Cart
+							</button>
+						)}
 					</div>
 				</div>
 			</div>
